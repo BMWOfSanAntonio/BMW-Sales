@@ -67,6 +67,35 @@
                     required
                   >No, parts did not need to be ordered.</b-form-radio>
                 </b-form-group>
+                <div class="cal">
+                  <p>
+                    <span>Appointment Date</span>
+                  </p>
+                  <v-date-picker v-model="weowe.appointment_date" :min-date="new Date()" is-inline />
+                  <p>Date: {{ weowe.appointment_date }}</p>
+                </div>
+                <div class="cal">
+                  <p>
+                    <span>Estimated Completion Date</span>
+                  </p>
+                  <v-date-picker v-model="weowe.completion_date" :min-date="new Date()" is-inline />
+                  <p>Date: {{ weowe.completion_date }}</p>
+                </div>
+                <!-- // * Invoice Number -->
+                <b-form-group
+                  class="group"
+                  id="input-invoice-number"
+                  label="Invoice Number:"
+                  label-for="invoice-number"
+                >
+                  <b-form-input
+                    id="invoice-number"
+                    v-model="weowe.invoice_number"
+                    type="text"
+                    required
+                    placeholder="Please enter the invoice number here..."
+                  ></b-form-input>
+                </b-form-group>
               </b-form>
             </template>
           </b-modal>
@@ -92,7 +121,8 @@ export default {
     return {
       currentTime: Date.now(),
       state: "started",
-      genius: []
+      genius: [],
+      date: ""
     };
   },
   methods: {
@@ -126,5 +156,9 @@ export default {
 }
 span {
   font-weight: bold;
+}
+
+.cal {
+  display: inline-block;
 }
 </style>

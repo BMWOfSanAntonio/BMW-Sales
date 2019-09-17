@@ -17,6 +17,9 @@ import { store } from "./store/store";
 // * Import Portal Vue
 import PortalVue from "portal-vue";
 
+// * import date picker
+import VCalendar from "v-calendar";
+
 // * Import BootstrapVue
 import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
@@ -26,6 +29,7 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 Vue.use(firestorePlugin);
 Vue.use(PortalVue);
 Vue.use(BootstrapVue);
+Vue.use(VCalendar);
 
 // * initialize Firebase
 // * setting database config infromation
