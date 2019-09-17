@@ -1,28 +1,35 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-// Vue Imports for Vue + Router
+// * default Vue config w/ router
 import Vue from "vue";
 import App from "./App";
 import router from "./router";
-
-// Firebase firestore imports
-import { firestorePlugin } from "vuefire";
-import firebase from "firebase/app";
-import "firebase/firestore";
-
-// Vuetify Imports, library + css
-import Vuetify from "vuetify";
-import "vuetify/dist/vuetify.min.css";
-
-// Plugins
-Vue.use(Vuetify);
-Vue.use(firestorePlugin);
-
-// Default Vue Setting
 Vue.config.productionTip = false;
 
-// Firebase config information
-firebase.initializeApp({
+// * import Firebase & vuefire
+import firebase from "firebase";
+import { firestorePlugin } from "vuefire";
+import "firebase/firestore";
+
+// * Import Vuex store const
+import { store } from "./store/store";
+
+// * Import Portal Vue
+import PortalVue from "portal-vue";
+
+// * Import BootstrapVue
+import BootstrapVue from "bootstrap-vue";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+
+// * plugins
+Vue.use(firestorePlugin);
+Vue.use(PortalVue);
+Vue.use(BootstrapVue);
+
+// * initialize Firebase
+// * setting database config infromation
+const config = {
   apiKey: "AIzaSyDLiWuwmqt0LUt96DQH1D6vacBBBObQkAI",
   authDomain: "keytracker-e176b.firebaseapp.com",
   databaseURL: "https://keytracker-e176b.firebaseio.com",
@@ -30,24 +37,26 @@ firebase.initializeApp({
   storageBucket: "keytracker-e176b.appspot.com",
   messagingSenderId: "1084196062284",
   appId: "1:1084196062284:web:5d81b521c622eb31"
-});
+};
+// * initalizing Firebase
+firebase.initializeApp(config);
 
-/* eslint-disable no-new */
+// * Exporting the database out
+export const db = firebase.firestore();
 
 let app = null;
 
-// Vue init
+/* eslint-disable no-new */
 firebase.auth().onAuthStateChanged(() => {
   if (!app) {
     new Vue({
       el: "#app",
-      vuetify: new Vuetify(),
+      // * vuex
+      store,
+      // * router
       router,
       components: { App },
       template: "<App/>"
     });
   }
 });
-
-// Exporting the database for use in components
-export const db = firebase.firestore();

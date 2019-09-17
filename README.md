@@ -1,6 +1,6 @@
-# sales
+# portal_2.0
 
-> This is a make ready and finance application for the BMW of San Antonio sales team.
+> company wide work platform
 
 ## Build Setup
 
