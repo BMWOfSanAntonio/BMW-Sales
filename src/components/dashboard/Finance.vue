@@ -267,6 +267,7 @@ export default {
       financeView: db
         .collection("makeready")
         .where("states.finance_state", "==", true)
+        .orderBy("sales.completion_timestamp")
     };
   }
 };

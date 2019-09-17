@@ -263,6 +263,7 @@ export default {
       salesManagerView: db
         .collection("makeready")
         .where("states.sales_state", "==", true)
+        .orderBy("initial_timestamp")
     };
   }
 };

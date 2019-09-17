@@ -5,7 +5,7 @@
     <tbody>
       <tr v-for="(weowe, i) in weoweSalesManager" :key="i">
         <!-- // * index of the document -->
-        <td>{{ id + 1 }}</td>
+        <td>{{ i + 1 }}</td>
         <!-- // * elapsed timer -->
         <td>{{ dateFormat(weowe) }} minutes</td>
         <!-- // * associate name -->
@@ -205,6 +205,7 @@ export default {
       weoweSalesManager: db
         .collection("weowes")
         .where("states.sales_state", "==", true)
+        .orderBy("initial_timestamp")
     };
   }
 };

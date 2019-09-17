@@ -15,6 +15,8 @@
       <h1 class="display-4" v-if="this.user.access_level == 'Parts'">Parts Queue</h1>
       <!-- // * Detail View Title -->
       <h1 class="display-4" v-if="this.user.access_level == 'Detail'">Detail Queue</h1>
+      <!-- // * Detail View Title -->
+      <h1 class="display-4" v-if="this.user.access_level == 'Genius'">Genius Queue</h1>
     </div>
     <table class="table table-hover">
       <!-- // ! user/department views: Start -->
