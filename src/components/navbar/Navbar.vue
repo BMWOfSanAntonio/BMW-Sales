@@ -10,7 +10,7 @@
           <b-navbar-nav>
             <!-- // * loops through all items in the links array. Links to the department views, contains path, name, and icon for each -->
             <b-nav-item
-              v-if="user.access_level == 'Sales' || user.access_level == 'SalesManager'"
+              v-if="user.access_level == 'Sales' || user.access_level == 'SalesManager' || user.access == 'Genius'"
               href="#/makeready/"
             >
               <i class="material-icons align-middle">description</i>

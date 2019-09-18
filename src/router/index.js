@@ -80,7 +80,8 @@ router.beforeEach((to, from, next) => {
             next();
           } else if (
             (doc.data().access_level == "SalesManager" ||
-              doc.data().access_level == "Sales") &&
+              doc.data().access_level == "Sales" ||
+              doc.data().access_level == "Genius") &&
             to.name == "Request"
           ) {
             next();
