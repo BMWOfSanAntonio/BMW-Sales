@@ -23,7 +23,9 @@
         <!-- // * Status -->
         <template>
           <td v-if="req.status.detail_status !== 'Claimed'">Pending...</td>
-          <td v-if="req.status.detail_status == 'Claimed'">Claimed by {{ req.detail.detail_associate }}</td>
+          <td
+            v-if="req.status.detail_status == 'Claimed'"
+          >Claimed by {{ req.detail.detail_associate }}</td>
         </template>
         <td>
           <i v-b-modal="req.id" class="material-icons">info</i>
@@ -235,6 +237,7 @@ export default {
       detailView: db
         .collection("makeready")
         .where("states.detail_state", "==", true)
+        .orderBy("sales.completion_timestamp")
     };
   }
 };
