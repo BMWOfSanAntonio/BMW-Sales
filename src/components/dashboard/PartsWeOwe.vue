@@ -33,8 +33,12 @@
           <!-- // * Modal: Start -->
           <b-modal hide-footer centered size="lg" :id="weowe.id" title="More Information: ">
             <!-- // * ~~~ Deal infromation sections ~~~ -->
-            <h5 class="ml-4">We Owe Information:</h5>
+            <h5 class="ml-4">We Owe Information</h5>
             <ul>
+              <li>
+                <span>Sales Associate:</span>
+                {{ weowe.userinfo.associate }}
+              </li>
               <li>
                 <span>Customer Name:</span>
                 {{ weowe.data.customer_name }}

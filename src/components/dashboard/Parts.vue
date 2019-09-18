@@ -37,6 +37,10 @@
             <h5 class="ml-4">Make Ready Information:</h5>
             <ul>
               <li>
+                <span>Sales Associate:</span>
+                {{ req.userinfo.associate }}
+              </li>
+              <li>
                 <span>Customer Name:</span>
                 {{ req.data.customer_name }}
               </li>
