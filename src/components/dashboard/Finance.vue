@@ -88,6 +88,13 @@
                   >No, I did not.</b-form-radio>
                 </b-form-group>
 
+                <b-button
+                  @click="detail(req)"
+                  variant="primary"
+                  class="mt-2 mb-3"
+                  v-if="req.finance.nano_care == 'Yes'"
+                >Send to Detail</b-button>
+
                 <!-- // * Finance comments -->
                 <b-row class="group">
                   <b-col sm="2">
@@ -104,7 +111,6 @@
                 <hr />
                 <!-- // * ~~~ Modal Buttons ~~~ -->
                 <template>
-                  <!-- // TODO: Kill deal option -->
                   <!-- // * Kill Deal -->
                   <template>
                     <b-button @click="kill(req)" variant="danger">Kill Deal</b-button>
@@ -244,6 +250,14 @@ export default {
           "status.finance_status": "This request has been removed by a manager",
           "kill.associate": this.user.display_name,
           "kill.kill_time": Date.now()
+        });
+    },
+    detail(req) {
+      db.collection("makeready")
+        .doc(req.id)
+        .update({
+          "finance.nano_care": "Yes",
+          "finance.nano_care_timestamp": Date.now()
         });
     },
     // * Other Methods

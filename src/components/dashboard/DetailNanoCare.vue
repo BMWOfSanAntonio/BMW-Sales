@@ -6,7 +6,7 @@
       <!-- // * Says that the request has a detail state of true and either detail or admin assess -->
       <tr v-for="(req, i) in detailNanoCare" :key="i">
         <!-- // * index of the document -->
-        <td>{{ id + 1 }}</td>
+        <td>{{ i + 1 }}</td>
         <!-- // * date -->
         <td>{{ dateFormat(req) }} minutes</td>
         <!-- // * associate name -->
@@ -188,7 +188,7 @@ export default {
     },
     dateFormat(req) {
       return Math.floor(
-        (this.currentTime - req.sales.completion_makeready_timestamp) / 60000
+        (this.currentTime - req.finance.nano_care_timestamp) / 60000
       );
     }
   },
