@@ -28,7 +28,7 @@
           <td v-if="req.status.finance_status == 'Pending...'">{{ req.status.finance_status }}</td>
           <td
             v-if="req.status.finance_status == 'Claimed'"
-          >{{ req.status.finance_status }} by {{ req.userinfo.associate }}</td>
+          >{{ req.status.finance_status }} by {{ req.finance.finance_associate }}</td>
         </template>
         <td>
           <i v-b-modal="req.id" class="material-icons">info</i>
@@ -267,7 +267,7 @@ export default {
       financeView: db
         .collection("makeready")
         .where("states.finance_state", "==", true)
-        .orderBy("sales.completion_timestamp")
+        .orderBy("sales.finance_completion_timestamp")
     };
   }
 };
