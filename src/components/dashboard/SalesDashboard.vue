@@ -15,7 +15,17 @@
         <!-- // * stock number -->
         <td>{{ req.data.stock_number }}</td>
         <!-- // * type of vehicle -->
-        <td>{{ req.data.type_of_vehicle }}</td>
+        <td>
+          <h5 v-if="req.data.type_of_vehicle == 'New'">
+            <b-badge pill variant="danger">{{ req.data.type_of_vehicle }}</b-badge>
+          </h5>
+          <h5 v-if="req.data.type_of_vehicle == 'Loaner'">
+            <b-badge pill variant="success">{{ req.data.type_of_vehicle }}</b-badge>
+          </h5>
+          <h5 v-if="req.data.type_of_vehicle == 'Pre-Owned'">
+            <b-badge pill variant="warning">{{ req.data.type_of_vehicle }}</b-badge>
+          </h5>
+        </td>
         <!-- // * type of request -->
         <template>
           <td v-if="req.detail">Make Ready</td>
@@ -24,12 +34,23 @@
         <template>
           <td
             v-if="req.status.parts_status !== 'Complete' || req.status.detail_status !== 'Complete' || req.status.finance_status !== 'Complete'"
-          >In Process...</td>
+          >
+            <h5>
+              <b-badge pill variant="warning">Process...</b-badge>
+            </h5>
+          </td>
           <td
-            class="table-danger"
             v-else-if="req.parts.parts_on_order == 'Yes' && req.status.parts_status =='Complete' && req.status.detail_status == 'Complete' && req.status.finance_status == 'Complete'"
-          >Complete w/ Parts on Order</td>
-          <td class="table-success" v-else>Complete</td>
+          >
+            <h5>
+              <b-badge pill variant="danger">Complete w/ Parts Ordered</b-badge>
+            </h5>
+          </td>
+          <td v-else>
+            <h5>
+              <b-badge pill variant="success">Complete</b-badge>
+            </h5>
+          </td>
         </template>
         <td>
           <i v-b-modal="req.id" class="material-icons">info</i>
@@ -88,37 +109,130 @@
             </ul>
             <h5 class="ml-4">Status:</h5>
             <ul>
+              <!-- // * Sales Status: Start -->
               <li>
                 <span>Sales Status:</span>
-                <span v-if="req.detail">{{ req.status.sales_status }}</span>
-                <span v-if="req.status.finance_status !== null">, Finance Approved</span>
-              </li>
-              <li>
-                <template v-if="req.status.parts_status == null">
-                  <span>Parts Status:</span>
-                  {{ req.status.parts_status }}
-                </template>
-                <template v-if="req.parts.parts_on_order == 'No'">
-                  <span>Parts Status:</span>
-                  {{ req.status.parts_status }}
-                </template>
-                <template v-if="req.parts.parts_on_order == 'Yes'">
-                  <span>Parts Status:</span>
-                  {{ req.status.parts_status }} - Parts need to be ordered!
-                </template>
-              </li>
-              <li>
-                <template>
-                  <span>Finance Status:</span>
-                  {{ req.status.finance_status }}
+                <!-- // * Sales Status: Complete -->
+                <template v-if="req.sales">
+                  <h5 class="inline">
+                    <b-badge pill variant="success">{{ req.status.sales_status }}</b-badge>
+                  </h5>
                 </template>
 
-                <template v-if="req.finance.nano_care == 'Yes'">- Nano Care was sold.</template>
+                <!-- // * Sales Status: Pending -->
+                <template v-else-if="req.detail">
+                  <h5 class="inline">
+                    <b-badge pill variant="warning">{{ req.status.sales_status }}</b-badge>
+                  </h5>
+                </template>
+
+                <!-- // * Finance Status: Approved -->
+                <template v-if="req.status.finance_status !== null">
+                  <h5 class="inline">
+                    <b-badge pill variant="success">Finance Approved</b-badge>
+                  </h5>
+                </template>
+
+                <!-- // * Finance Status: Pending -->
+                <template v-else-if="req.status.finance_status == null">
+                  <h5 class="inline">
+                    <b-badge pill variant="danger">Finance Pending Approval</b-badge>
+                  </h5>
+                </template>
               </li>
+              <!-- // * Sales Status: End -->
+              <!-- // * Parts Status: Start -->
+              <li>
+                <span>Parts Status:</span>
+                <!-- // * Parts Status: null -->
+                <template v-if="req.status.parts_status == null">
+                  <h5 class="inline">
+                    <b-badge pill variant="warning">Waiting for Sales Manager Approval</b-badge>
+                  </h5>
+                </template>
+                <!-- // * Parts Status: Pending -->
+                <template v-else-if="req.status.parts_status == 'Pending...'">
+                  <h5 class="inline">
+                    <b-badge pill variant="warning">{{ req.status.parts_status }}</b-badge>
+                  </h5>
+                </template>
+                <!-- // * Parts Status: Claimed -->
+                <template v-else-if="req.status.parts_status == 'Claimed'">
+                  <h5 class="inline">
+                    <b-badge
+                      pill
+                      variant="primary"
+                    >{{ req.status.parts_status }} by {{ req.parts.parts_associate }}</b-badge>
+                  </h5>
+                </template>
+                <!-- // * Parts Status: Complete -->
+                <template v-else-if="req.status.parts_status == 'Complete'">
+                  <h5 class="inline">
+                    <b-badge pill variant="success">Complete by {{ req.parts.parts_associate }}</b-badge>
+                  </h5>
+                </template>
+                <!-- // * Parts Status: Parts need to be ordered -->
+                <template v-if="req.parts.parts_on_order == 'Yes'">
+                  <h5>
+                    <b-badge pill variant="danger">Parts need to be ordered!</b-badge>
+                  </h5>
+                </template>
+              </li>
+              <!-- // * Parts Status: End -->
+              <!-- // * Finance Status: Start -->
+              <li>
+                <span>Finance Status:</span>
+                <!-- // * Finance Status: Pending -->
+                <template v-if="req.status.finance_status == 'Pending...'">
+                  <h5 class="inline">
+                    <b-badge pill variant="warning">{{ req.status.finance_status }}</b-badge>
+                  </h5>
+                </template>
+
+                <!-- // * Finance Status: Claimed -->
+                <template v-if="req.status.finance_status == 'Claimed'">
+                  <h5 class="inline">
+                    <b-badge
+                      pill
+                      variant="primary"
+                    >{{ req.status.finance_status }} by {{ req.detail.detail_associate }}</b-badge>
+                  </h5>
+                </template>
+
+                <!-- // * Finance Status: Complete -->
+                <template v-if="req.status.finance_status == 'Complete'">
+                  <h5 class="inline">
+                    <b-badge
+                      pill
+                      variant="success"
+                    >{{ req.status.finance_status }} by {{ req.detail.detail_associate }}</b-badge>
+                  </h5>
+                </template>
+                <!-- // * Nano Care: Yes -->
+                <template v-if="req.finance.nano_care == 'Yes'">
+                  <h5 class="inline">
+                    <b-badge pill variant="info">Nano Care Sold</b-badge>
+                  </h5>
+                </template>
+              </li>
+              <!-- // * Finance Status: End -->
+              <!-- // * Detail Status: Start -->
               <li>
                 <span>Detail Status:</span>
-                {{ req.status.detail_status }} - {{ req.detail.delivery_bay }}
+                <!-- // * Detail Status: Pending -->
+                <template v-if="req.status.detail_status == 'Pending...'">
+                  <h5 class="inline">
+                    <b-badge pill variant="warning">{{ req.status.detail_status }}</b-badge>
+                  </h5>
+                </template>
+                <!-- // * Detail Status: Complete -->
+                <template v-if="req.status.detail_status == 'Complete'">
+                  <h5 class="inline">
+                    <b-badge pill variant="success">{{ req.status.detail_status }}</b-badge>
+                  </h5>
+                </template>
               </li>
+              <!-- // * Detail Status: End -->
             </ul>
             <b-button
               v-if="req.states.request_state == false"
@@ -152,7 +266,7 @@ export default {
   },
   methods: {
     dateFormat(req) {
-      return new Date(req.initial_timestamp).toLocaleString();
+      return new Date(req.initial_timestamp).toDateString();
     },
     clearFromView(req) {
       db.collection("makeready")
@@ -178,7 +292,8 @@ export default {
 </script>
 
 <style scoped>
-.sales-dashboard {
+.sales-dashboard,
+.inline {
   display: inline-block;
 }
 /* //* Centers text in the table */
