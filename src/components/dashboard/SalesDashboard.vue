@@ -36,7 +36,7 @@
             v-if="req.status.parts_status !== 'Complete' || req.status.detail_status !== 'Complete' || req.status.finance_status !== 'Complete'"
           >
             <h5>
-              <b-badge pill variant="warning">Process...</b-badge>
+              <b-badge pill variant="warning">In Process...</b-badge>
             </h5>
           </td>
           <td

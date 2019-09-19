@@ -16,7 +16,17 @@
           <!-- // * stock number -->
           <td>{{ weowe.data.stock_number }}</td>
           <!-- // * type of vehicle -->
-          <td>{{ weowe.data.type_of_vehicle }}</td>
+          <td>
+            <h5 v-if="weowe.data.type_of_vehicle == 'New'">
+              <b-badge pill variant="danger">{{ weowe.data.type_of_vehicle }}</b-badge>
+            </h5>
+            <h5 v-if="weowe.data.type_of_vehicle == 'Loaner'">
+              <b-badge pill variant="success">{{ weowe.data.type_of_vehicle }}</b-badge>
+            </h5>
+            <h5 v-if="weowe.data.type_of_vehicle == 'Pre-Owned'">
+              <b-badge pill variant="warning">{{ weowe.data.type_of_vehicle }}</b-badge>
+            </h5>
+          </td>
           <!-- // * Type of Request -->
           <td>We Owe</td>
           <!-- // * type of weoweuest -->
@@ -25,15 +35,34 @@
           </template>
           <!-- // * status -->
           <template>
+            <!-- // * Parts Ordered: Yes -->
             <td
-              class="table-success"
-              v-if="weowe.status.parts_status == 'Complete' && weowe.status.sales_status == 'Complete'"
-            >Complete</td>
+              v-if="weowe.parts.parts_on_order == 'Yes' && weowe.status.parts_status == 'Complete' && weowe.status.sales_status == 'Complete'"
+            >
+              <h5>
+                <b-badge pill variant="danger">Complete w/ Parts On Order</b-badge>
+              </h5>
+            </td>
+            <!-- // * Status: Complete -->
             <td
-              class="table-danger"
-              v-else-if="weowe.status.sales_status == 'Denied Request'"
-            >{{ weowe.status.sales_status }}</td>
-            <td v-else>In Process...</td>
+              v-else-if="weowe.status.parts_status == 'Complete' && weowe.status.sales_status == 'Complete'"
+            >
+              <h5>
+                <b-badge pill variant="success">Complete</b-badge>
+              </h5>
+            </td>
+            <!-- // * Status: Denied -->
+            <td v-else-if="weowe.status.sales_status == 'Denied Request'">
+              <h5>
+                <b-badge>{{ weowe.status.sales_status }}</b-badge>
+              </h5>
+            </td>
+            <!-- // * Status: In Process -->
+            <td v-else>
+              <h5>
+                <b-badge pill variant="warning">In Process...</b-badge>
+              </h5>
+            </td>
           </template>
           <td>
             <i v-b-modal="weowe.id" class="material-icons">info</i>
@@ -65,13 +94,50 @@
               </ul>
               <h5 class="ml-4">Status:</h5>
               <ul>
+                <!-- // * Sales Status: Start -->
                 <li>
                   <span>Sales Status:</span>
-                  <span>{{ weowe.status.sales_status }}</span>
+                  <!-- // * Sales status: pending... -->
+                  <template v-if="weowe.status.sales_status == 'Pending...'">
+                    <h5 class="inline">
+                      <b-badge pill variant="warning">{{ weowe.status.sales_status }}</b-badge>
+                    </h5>
+                  </template>
+                  <!-- // * Sales status: pending... -->
+                  <template v-if="weowe.status.sales_status == 'Complete'">
+                    <h5 class="inline">
+                      <b-badge pill variant="success">Approved</b-badge>
+                    </h5>
+                  </template>
                 </li>
+                <!-- // * Sales Status: End -->
+                <!-- // * Parts Status: Start -->
                 <li>
                   <span>Parts Status:</span>
-                  {{ weowe.status.parts_status }}
+                  <!-- // * Parts status: Pending -->
+                  <template v-if="weowe.status.parts_status == 'Pending...'">
+                    <h5 class="inline">
+                      <b-badge pill variant="warning">{{ weowe.status.parts_status }}</b-badge>
+                    </h5>
+                  </template>
+                  <!-- // * Parts status: Claimed -->
+                  <template v-if="weowe.status.parts_status == 'Claimed'">
+                    <h5 class="inline">
+                      <b-badge
+                        pill
+                        variant="primary"
+                      >{{ weowe.status.parts_status }} by {{ weowe.parts.associate }}</b-badge>
+                    </h5>
+                  </template>
+                  <!-- // * Parts status: Complete -->
+                  <template v-if="weowe.status.parts_status == 'Complete'">
+                    <h5 class="inline">
+                      <b-badge
+                        pill
+                        variant="success"
+                      >{{ weowe.status.parts_status }} by {{ weowe.parts.associate }}</b-badge>
+                    </h5>
+                  </template>
                 </li>
               </ul>
               <b-button
@@ -132,7 +198,8 @@ export default {
 </script>
 
 <style scoped>
-.sales-we-owe {
+.sales-we-owe,
+.inline {
   display: inline-block;
 }
 /* //* Centers text in the table */
