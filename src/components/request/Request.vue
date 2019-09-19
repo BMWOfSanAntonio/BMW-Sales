@@ -1,16 +1,13 @@
 <template>
   <div class="request">
-    <!-- // * Make Ready / We Owe Switch -->
-    <div class="mt-3">
+    <!-- // * Make Ready / We Owe Switch: Start -->
+    <div class="mt-4">
       <b-button-group size="md">
-        <b-button
-          @click="request_type = false"
-          :pressed="!request_type"
-          variant="primary"
-        >Make Ready</b-button>
-        <b-button @click="request_type = true" :pressed="request_type" variant="primary">We Owe</b-button>
+        <b-button @click="request_type = false" :pressed="!request_type" variant="danger">Make Ready</b-button>
+        <b-button @click="request_type = true" :pressed="request_type" variant="danger">We Owe</b-button>
       </b-button-group>
     </div>
+    <!-- // * Make Ready / We Owe Switch: End -->
     <!-- // ! Make Ready Request Form: START -->
     <!-- // * Make Ready Request Form: START -->
     <div v-if="request_type == null || request_type == false">
