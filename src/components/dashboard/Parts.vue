@@ -6,7 +6,7 @@
       <tr
         v-for="(req, i) in partsView"
         :key="i"
-        v-if="(req.data.type_of_vehicle == 'New' || req.data.type_of_vehicle == 'Loaner') && req.states.parts_state == true"
+        v-if="(req.data.type_of_vehicle == 'New' || (req.data.type_of_vehicle == 'Loaner' && req.data.ccp == 'Yes')) && req.states.parts_state == true"
       >
         <!-- // * index of the document -->
         <td>{{ i + 1 }}</td>
