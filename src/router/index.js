@@ -82,16 +82,18 @@ router.beforeEach((to, from, next) => {
             (doc.data().access_level == "SalesManager" ||
               doc.data().access_level == "Sales" ||
               doc.data().access_level == "Genius") &&
-            to.name == "Request"
+            to.name == "Request" &&
+            to.name !== "Admin"
           ) {
             next();
           } else if (
             doc.data().access_level !== "Undefined" &&
-            to.name !== "Request"
+            to.name !== "Request" &&
+            to.name !== "Admin"
           ) {
             next();
           } else {
-            next("/oops");
+            next("/makeready/user/dashboard");
           }
           // User is signed in. Proceed to route
         });
