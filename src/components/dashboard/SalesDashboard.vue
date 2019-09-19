@@ -120,6 +120,12 @@
                 {{ req.status.detail_status }} - {{ req.detail.delivery_bay }}
               </li>
             </ul>
+            <b-button
+              v-if="req.states.request_state == false"
+              @click="clearFromView(req)"
+              class="ml-3"
+              variant="info"
+            >Clear From View</b-button>
           </b-modal>
           <!-- // * Modal: End -->
         </td>
@@ -147,6 +153,13 @@ export default {
   methods: {
     dateFormat(req) {
       return new Date(req.initial_timestamp).toLocaleString();
+    },
+    clearFromView(req) {
+      db.collection("makeready")
+        .doc(req.id)
+        .update({
+          "status.overall_status": 12
+        });
     }
   },
   firestore() {
@@ -158,6 +171,7 @@ export default {
           "==",
           firebase.auth().currentUser.displayName
         )
+        .where("status.overall_status", "==", 10)
     };
   }
 };
