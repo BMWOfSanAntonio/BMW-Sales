@@ -144,7 +144,8 @@ export default {
             "states.parts_state": true,
             "status.parts_status": "Pending...",
             "states.genius_state": true,
-            "status.genius_status": "Pending"
+            "status.genius_status": "Pending",
+            "data.spiff": weowe.data.spiff
           });
       }
       // * Needs to go to just genius
@@ -160,7 +161,8 @@ export default {
             "states.sales_state": false,
             "status.sales_status": "Complete",
             "states.genius_state": true,
-            "status.genius_status": "Pending"
+            "status.genius_status": "Pending",
+            "data.spiff": weowe.data.spiff
           });
       }
       // * Needs to go to just parts
@@ -176,7 +178,8 @@ export default {
             "states.sales_state": false,
             "status.sales_status": "Complete",
             "states.parts_state": true,
-            "status.parts_status": "Pending..."
+            "status.parts_status": "Pending...",
+            "data.spiff": weowe.data.spiff
           });
       } else {
         db.collection("weowes")
@@ -188,7 +191,8 @@ export default {
             "states.sales_state": false,
             "status.sales_status": "Complete",
             "states.parts_state": true,
-            "status.parts_status": "Pending..."
+            "status.parts_status": "Pending...",
+            "data.spiff": weowe.data.spiff
           });
       }
       console.log(coordinate);
