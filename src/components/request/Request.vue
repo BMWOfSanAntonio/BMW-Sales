@@ -499,7 +499,8 @@ export default {
             make: this.make,
             model: this.model,
             year: this.year,
-            accessories: this.items
+            accessories: this.items,
+            spiff: null
           },
           userinfo: {
             associate: this.user.display_name,

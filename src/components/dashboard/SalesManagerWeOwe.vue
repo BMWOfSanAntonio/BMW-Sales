@@ -59,6 +59,23 @@
                 :key="i"
               >{{ item.accessory }} - {{ item.total_install_price }}</li>
             </ul>
+            <b-form-group
+              class="group ml-4"
+              id="spiff"
+              label="Is this eligable for a spiff?"
+              required
+            >
+              <b-form-radio
+                v-model="weowe.data.spiff"
+                name="some-other-radios"
+                value="Yes"
+              >Yes, it is.</b-form-radio>
+              <b-form-radio
+                v-model="weowe.data.spiff"
+                name="some-other-radios"
+                value="No"
+              >No, it is not.</b-form-radio>
+            </b-form-group>
             <hr />
             <div class="buttons">
               <!-- // * ~~~ Buttons ~~~ -->
