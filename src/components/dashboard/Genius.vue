@@ -10,6 +10,7 @@
         <td>{{ weowe.userinfo.associate}}</td>
         <td>{{ weowe.data.customer_name }}</td>
         <td>{{ weowe.data.stock_number }}</td>
+        <td>{{ weowe.data.type_of_vehicle }}</td>
         <td>Approved We Owe</td>
         <td>{{ weowe.status.genius_status }}</td>
         <td>

@@ -15,6 +15,8 @@
         <td>{{ req.data.customer_name }}</td>
         <!-- // * stock number -->
         <td>{{ req.data.stock_number }}</td>
+        <!-- // * type of vehicle -->
+        <td>{{ req.data.type_of_vehicle }}</td>
         <!-- // * type of request -->
         <template>
           <!-- // * make ready -->

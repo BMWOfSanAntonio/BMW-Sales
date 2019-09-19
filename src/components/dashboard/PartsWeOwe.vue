@@ -16,6 +16,8 @@
         <td>{{ weowe.data.customer_name }}</td>
         <!-- // * stock number -->
         <td>{{ weowe.data.stock_number }}</td>
+        <!-- // * type of vehicle -->
+        <td>{{ weowe.data.type_of_vehicle }}</td>
         <!-- // * type of weoweuest -->
         <template>
           <!-- // * make ready -->
