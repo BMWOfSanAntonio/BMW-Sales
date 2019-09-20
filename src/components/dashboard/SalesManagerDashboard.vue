@@ -286,4 +286,7 @@ h5 {
 .buttons {
   text-align: right;
 }
+i:hover {
+  cursor: pointer;
+}
 </style>

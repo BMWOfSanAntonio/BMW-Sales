@@ -25,7 +25,7 @@
           <td v-if="weowe.status.sales_status == 'Pending...'">{{ weowe.status.sales_status }}</td>
         </template>
         <td>
-          <i v-b-modal="weowe.id" class="material-icons">info</i>
+          <i :id="weowe.id" v-b-modal="weowe.id" class="material-icons">info</i>
           <!-- // * Modal: Start -->
           <b-modal hide-footer centered size="lg" :id="weowe.id" title="More Information: ">
             <!-- // * ~~~ Deal infromation sections ~~~ -->
@@ -76,6 +76,20 @@
                 value="No"
               >No, it is not.</b-form-radio>
             </b-form-group>
+            <b-row>
+              <b-col sm="2">
+                <label class="ml-4 mt-2" for="textarea-small">Comments:</label>
+              </b-col>
+              <b-col sm="9">
+                <b-form-textarea
+                  v-model="weowe.sales_manager_comments"
+                  class="mt-2"
+                  id="textarea-small"
+                  size="sm"
+                  placeholder="Sales Manager notes to parts"
+                ></b-form-textarea>
+              </b-col>
+            </b-row>
             <hr />
             <div class="buttons">
               <!-- // * ~~~ Buttons ~~~ -->
@@ -149,7 +163,8 @@ export default {
             appointment_date: "",
             completion_date: "",
             invoice_number: "",
-            "data.spiff": weowe.data.spiff
+            "data.spiff": weowe.data.spiff,
+            sales_manager_comments: weowe.sales_manager_comments
           });
       }
       // * Needs to go to just genius
@@ -170,7 +185,8 @@ export default {
             appointment_date: "",
             completion_date: "",
             invoice_number: "",
-            "data.spiff": weowe.data.spiff
+            "data.spiff": weowe.data.spiff,
+            sales_manager_comments: weowe.sales_manager_comments
           });
       }
       // * Needs to go to just parts
@@ -187,7 +203,8 @@ export default {
             "status.sales_status": "Complete",
             "states.parts_state": true,
             "status.parts_status": "Pending...",
-            "data.spiff": weowe.data.spiff
+            "data.spiff": weowe.data.spiff,
+            sales_manager_comments: weowe.sales_manager_comments
           });
       } else {
         db.collection("weowes")
@@ -200,7 +217,8 @@ export default {
             "status.sales_status": "Complete",
             "states.parts_state": true,
             "status.parts_status": "Pending...",
-            "data.spiff": weowe.data.spiff
+            "data.spiff": weowe.data.spiff,
+            sales_manager_comments: weowe.sales_manager_comments
           });
       }
       console.log(coordinate);
@@ -256,5 +274,8 @@ h5 {
 }
 .buttons {
   text-align: right;
+}
+i:hover {
+  cursor: pointer;
 }
 </style>

@@ -68,6 +68,12 @@
               - {{ weowe.quote_number }}
             </div>
             <ul>
+              <li>
+                <span>Sales Manager Notes:</span>
+                {{ weowe.sales_manager_comments }}
+              </li>
+            </ul>
+            <ul>
               <template v-if="weowe.no_coordinate">
                 <li v-for="(item, i) in weowe.no_coordinate" :key="i">
                   <p>{{ item.accessory }} - {{ item.total_install_price }}</p>
