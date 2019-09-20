@@ -176,23 +176,46 @@ export default {
         .doc(weowe.id)
         .update({
           parts_in_stock: weowe.parts_in_stock,
-          appointment_date: weowe.appointment_date,
-          completion_date: weowe.completion_date,
+          appointment_date: "" + weowe.appointment_date.toDateString() + "",
+          completion_date: "" + weowe.completion_date.toDateString() + "",
           invoice_number: weowe.invoice_number,
           "status.genius_status": "Complete",
           "states.genius_state": false
         });
     },
     update(weowe) {
-      db.collection("weowes")
-        .doc(weowe.id)
-        .update({
-          parts_in_stock: weowe.parts_in_stock,
-          appointment_date: weowe.appointment_date,
-          completion_date: weowe.completion_date,
-          invoice_number: weowe.invoice_number,
-          "status.genius_status": "In process..."
-        });
+      if (
+        typeof weowe.appointment_date == "string" &&
+        typeof weowe.completion_date == "string"
+      ) {
+        console.log(weowe.appointment_date);
+        db.collection("weowes")
+          .doc(weowe.id)
+          .update({
+            parts_in_stock: weowe.parts_in_stock,
+            invoice_number: weowe.invoice_number,
+            "status.genius_status": "In process..."
+          });
+      } else if (typeof weowe.completion_date == "string") {
+        console.log("This is a different value");
+        db.collection("weowes")
+          .doc(weowe.id)
+          .update({
+            parts_in_stock: weowe.parts_in_stock,
+            appointment_date: "" + weowe.appointment_date.toDateString() + "",
+            invoice_number: weowe.invoice_number,
+            "status.genius_status": "In process..."
+          });
+      } else if (typeof weowe.appointment_date == "string") {
+        db.collection("weowes")
+          .doc(weowe.id)
+          .update({
+            parts_in_stock: weowe.parts_in_stock,
+            completion_date: "" + weowe.completion_date.toDateString() + "",
+            invoice_number: weowe.invoice_number,
+            "status.genius_status": "In process..."
+          });
+      }
     },
     // * Other Methods
     updateCurrentTime: function() {
@@ -207,12 +230,12 @@ export default {
     },
     formatAppointment(weowe) {
       const timestamp = weowe.appointment_date;
-      const startTime = timestamp.seconds * 1000;
+      const startTime = timestamp;
       return new Date(startTime).toDateString();
     },
     formatCompletion(weowe) {
       const timestamp = weowe.completion_date;
-      const startTime = timestamp.seconds * 1000;
+      const startTime = timestamp;
       return new Date(startTime).toDateString();
     }
   },

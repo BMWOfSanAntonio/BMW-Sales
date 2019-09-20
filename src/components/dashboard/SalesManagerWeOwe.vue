@@ -145,6 +145,10 @@ export default {
             "status.parts_status": "Pending...",
             "states.genius_state": true,
             "status.genius_status": "Pending",
+            parts_in_stock: null,
+            appointment_date: "",
+            completion_date: "",
+            invoice_number: "",
             "data.spiff": weowe.data.spiff
           });
       }
@@ -162,6 +166,10 @@ export default {
             "status.sales_status": "Complete",
             "states.genius_state": true,
             "status.genius_status": "Pending",
+            parts_in_stock: null,
+            appointment_date: "",
+            completion_date: "",
+            invoice_number: "",
             "data.spiff": weowe.data.spiff
           });
       }

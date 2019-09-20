@@ -115,6 +115,14 @@
                 <!-- // * Parts Status: Start -->
                 <li>
                   <span>Parts Status:</span>
+                  <!-- // * Parts status: Yes Coordinate Fee -->
+                  <template
+                    v-if="weowe.status.parts_status == null && weowe.status.sales_status == 'Complete'"
+                  >
+                    <h5 class="inline">
+                      <b-badge pill variant="info">Parts Department was not needed</b-badge>
+                    </h5>
+                  </template>
                   <!-- // * Parts status: Pending -->
                   <template v-if="weowe.status.parts_status == 'Pending...'">
                     <h5 class="inline">
@@ -140,7 +148,59 @@
                     </h5>
                   </template>
                 </li>
+                <!-- // * Parts Status: End -->
+                <!-- // * Genius Status: Start -->
+                <li v-if="weowe.status.genius_status">
+                  <span>Genius Status</span>
+                  <template>
+                    <h5 class="inline">
+                      <b-badge pill variant="warning">{{ weowe.status.genius_status }}</b-badge>
+                    </h5>
+                  </template>
+                </li>
               </ul>
+              <h5 v-if="weowe.status.genius_status" class="ml-4">Scheduling:</h5>
+              <ul v-if="weowe.status.genius_status">
+                <li>
+                  <!-- // * Did parts need to be ordered? -->
+                  <span>Did parts need to be ordered?:</span>
+                  <template v-if="weowe.parts_in_stock == null">
+                    <h5 class="inline">
+                      <b-badge pill variant="success">No infromation at this time</b-badge>
+                    </h5>
+                  </template>
+                  <template v-if="weowe.parts_in_stock == 'Yes'">
+                    <h5 class="inline">
+                      <b-badge pill variant="danger">Parts on Order</b-badge>
+                    </h5>
+                  </template>
+                </li>
+                <li>
+                  <span>Appointment Date:</span>
+                  <template v-if="weowe.appointment_date">
+                    <h5 class="inline">
+                      <b-badge pill variant="info">{{ weowe.appointment_date }}</b-badge>
+                    </h5>
+                  </template>
+                </li>
+                <li>
+                  <span>Estimated Completion Date:</span>
+                  <template v-if="weowe.completion_date">
+                    <h5 class="inline">
+                      <b-badge pill variant="info">{{ weowe.completion_date }}</b-badge>
+                    </h5>
+                  </template>
+                </li>
+                <li>
+                  <span>Invoice Number:</span>
+                  <template v-if="weowe.invoice_number">
+                    <h5 class="inline">
+                      <b-badge pill variant="info">{{ weowe.invoice_number }}</b-badge>
+                    </h5>
+                  </template>
+                </li>
+              </ul>
+              <!-- // * Genius Status: End -->
               <b-button
                 v-if="weowe.status.weowe_status == 'Complete'"
                 @click="clearFromView(weowe)"
@@ -159,6 +219,7 @@
 <script>
 import { db } from "../../main";
 import firebase from "firebase";
+import "firebase/firestore";
 import TableHeader from "./pieces/TableHeader";
 
 export default {
