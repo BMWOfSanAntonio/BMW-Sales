@@ -54,7 +54,9 @@
                     <span>Sales Status:</span>
                     <span>
                       {{ req.status.sales_status }} -
-                      <span v-if="req.status.finance_status == 'Complete'">Finance Approved</span>
+                      <span
+                        v-if="req.status.finance_status == 'Complete'"
+                      >Finance Approved</span>
                     </span>
                   </li>
                 </template>
@@ -99,7 +101,7 @@ export default {
   },
   firestore() {
     return {
-      reqs: db.collection("makeready")
+      reqs: db.collection("makeready").limit(100)
     };
   }
 };

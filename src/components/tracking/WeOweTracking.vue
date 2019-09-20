@@ -93,7 +93,7 @@ export default {
   },
   firestore() {
     return {
-      weowes: db.collection("weowes")
+      weowes: db.collection("weowes").limit(100)
     };
   }
 };
