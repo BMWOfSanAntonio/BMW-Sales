@@ -35,17 +35,18 @@
           </template>
           <!-- // * status -->
           <template>
-            <!-- // * Parts Ordered: Yes -->
+            <!-- // TODO: fix this issue, won't load this -->
+            <!-- // * Parts Ordered: Yes
             <td
-              v-if="weowe.parts.parts_on_order == 'Yes' && weowe.status.parts_status == 'Complete' && weowe.status.sales_status == 'Complete'"
+              v-if="weowe.parts.parts_on_order && weowe.status.parts_status == 'Complete' && weowe.status.sales_status == 'Complete'"
             >
               <h5>
                 <b-badge pill variant="danger">Complete w/ Parts On Order</b-badge>
               </h5>
-            </td>
+            </td>-->
             <!-- // * Status: Complete -->
             <td
-              v-else-if="weowe.status.parts_status == 'Complete' && weowe.status.sales_status == 'Complete'"
+              v-if="weowe.status.parts_status == 'Complete' && weowe.status.sales_status == 'Complete'"
             >
               <h5>
                 <b-badge pill variant="success">Complete</b-badge>

@@ -126,17 +126,17 @@
                   </h5>
                 </template>
 
-                <!-- // * Finance Status: Approved -->
-                <template v-if="req.status.finance_status !== null">
+                <!-- // * Finance Status: Pending -->
+                <template v-if="req.status.finance_status == null">
                   <h5 class="inline">
-                    <b-badge pill variant="success">Finance Approved</b-badge>
+                    <b-badge pill variant="warning">Finance Pending Approval</b-badge>
                   </h5>
                 </template>
 
-                <!-- // * Finance Status: Pending -->
-                <template v-else-if="req.status.finance_status == null">
+                <!-- // * Finance Status: Approved -->
+                <template v-else-if="req.status.finance_status !== null">
                   <h5 class="inline">
-                    <b-badge pill variant="danger">Finance Pending Approval</b-badge>
+                    <b-badge pill variant="success">Finance Approved</b-badge>
                   </h5>
                 </template>
               </li>
@@ -144,14 +144,8 @@
               <!-- // * Parts Status: Start -->
               <li>
                 <span>Parts Status:</span>
-                <!-- // * Parts Status: null -->
-                <template v-if="req.status.parts_status == null">
-                  <h5 class="inline">
-                    <b-badge pill variant="warning">Waiting for Sales Manager Approval</b-badge>
-                  </h5>
-                </template>
                 <!-- // * Parts Status: Pending -->
-                <template v-else-if="req.status.parts_status == 'Pending...'">
+                <template v-if="req.status.parts_status == 'Pending...'">
                   <h5 class="inline">
                     <b-badge pill variant="warning">{{ req.status.parts_status }}</b-badge>
                   </h5>
@@ -195,7 +189,7 @@
                     <b-badge
                       pill
                       variant="primary"
-                    >{{ req.status.finance_status }} by {{ req.detail.detail_associate }}</b-badge>
+                    >{{ req.status.finance_status }} by {{ req.finance.finance_associate }}</b-badge>
                   </h5>
                 </template>
 
@@ -205,7 +199,7 @@
                     <b-badge
                       pill
                       variant="success"
-                    >{{ req.status.finance_status }} by {{ req.detail.detail_associate }}</b-badge>
+                    >{{ req.status.finance_status }} by {{ req.finance.finance_associate }}</b-badge>
                   </h5>
                 </template>
                 <!-- // * Nano Care: Yes -->
