@@ -226,7 +226,7 @@ export default {
     },
     dateFormat(req) {
       return Math.floor(
-        (this.currentTime - req.sales.completion_timestamp) / 60000
+        (this.currentTime - req.sales.completion_makeready_timestamp) / 60000
       );
     }
   },
@@ -239,7 +239,7 @@ export default {
       detailView: db
         .collection("makeready")
         .where("states.detail_state", "==", true)
-        .orderBy("sales.completion_timestamp")
+        .orderBy("sales.completion_makeready_timestamp")
     };
   }
 };

@@ -29,6 +29,7 @@
         <template>
           <td v-if="req.status.parts_status !== 'Claimed'">Pending...</td>
           <td v-if="req.status.parts_status == 'Claimed'">Claimed by {{ user.display_name }}</td>
+          <td v-if="req.status.parts_status == 'Complete'">Claimed by {{ user.display_name }}</td>
         </template>
 
         <td>

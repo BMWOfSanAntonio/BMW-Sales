@@ -412,7 +412,8 @@ export default {
       nano_care: "",
       ccp: "",
       // * REQUEST TYPE SELECTION
-      request_type: null
+      request_type: null,
+      sales_manager_comments: ""
     };
   },
   methods: {

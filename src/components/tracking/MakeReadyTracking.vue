@@ -46,6 +46,10 @@
                   <span>Year:</span>
                   {{ req.data.year }}
                 </li>
+                <li>
+                  <span>CCP:</span>
+                  {{ req.data.ccp }}
+                </li>
               </ul>
               <h5 class="ml-4">Status:</h5>
               <ul>
@@ -61,8 +65,16 @@
                   </li>
                 </template>
                 <li>
-                  <span>Parts Status:</span>
-                  {{ req.status.parts_status }}
+                  <template
+                    v-if="req.data.ccp == 'No' && req.data.type_of_vehicle =='Loaner' && req.status.parts_status"
+                  >
+                    <span>Parts Status:</span>
+                    No Parts Needed
+                  </template>
+                  <template v-else>
+                    <span>Parts Status:</span>
+                    {{ req.status.parts_status }}
+                  </template>
                 </li>
                 <li>
                   <span>Finance Status:</span>
@@ -101,7 +113,10 @@ export default {
   },
   firestore() {
     return {
-      reqs: db.collection("makeready").limit(100)
+      reqs: db
+        .collection("makeready")
+        .orderBy("initial_timestamp", "desc")
+        .limit(100)
     };
   }
 };

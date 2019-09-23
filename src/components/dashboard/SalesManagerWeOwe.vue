@@ -143,84 +143,173 @@ export default {
           return item;
         }
       });
-      // * Needs to go to both parts and genius
-      if (no_coordinate.length > 0 && coordinate.length > 0) {
-        db.collection("weowes")
-          .doc(weowe.id)
-          .update({
-            no_coordinate: no_coordinate,
-            coordinate: coordinate,
-            "sales.completion_timestamp": Date.now(),
-            "sales.manager": this.user.display_name,
-            "sales.photo": firebase.auth().currentUser.photoURL,
-            "states.sales_state": false,
-            "status.sales_status": "Complete",
-            "states.parts_state": true,
-            "status.parts_status": "Pending...",
-            "states.genius_state": true,
-            "status.genius_status": "Pending",
-            parts_in_stock: null,
-            appointment_date: "",
-            completion_date: "",
-            invoice_number: "",
-            "data.spiff": weowe.data.spiff,
-            sales_manager_comments: weowe.sales_manager_comments
-          });
-      }
-      // * Needs to go to just genius
-      else if (coordinate.length > 0) {
-        db.collection("weowes")
-          .doc(weowe.id)
-          .update({
-            no_coordinate: no_coordinate,
-            coordinate: coordinate,
-            "sales.completion_timestamp": Date.now(),
-            "sales.manager": this.user.display_name,
-            "sales.photo": firebase.auth().currentUser.photoURL,
-            "states.sales_state": false,
-            "status.sales_status": "Complete",
-            "states.genius_state": true,
-            "status.genius_status": "Pending",
-            parts_in_stock: null,
-            appointment_date: "",
-            completion_date: "",
-            invoice_number: "",
-            "data.spiff": weowe.data.spiff,
-            sales_manager_comments: weowe.sales_manager_comments
-          });
-      }
-      // * Needs to go to just parts
-      else if (no_coordinate.length > 0) {
-        db.collection("weowes")
-          .doc(weowe.id)
-          .update({
-            no_coordinate: no_coordinate,
-            coordinate: coordinate,
-            "sales.completion_timestamp": Date.now(),
-            "sales.manager": this.user.display_name,
-            "sales.photo": firebase.auth().currentUser.photoURL,
-            "states.sales_state": false,
-            "status.sales_status": "Complete",
-            "states.parts_state": true,
-            "status.parts_status": "Pending...",
-            "data.spiff": weowe.data.spiff,
-            sales_manager_comments: weowe.sales_manager_comments
-          });
+      let comments = null;
+      if (
+        weowe.sales_manager_comments == "" ||
+        weowe.sales_manager_comments == null ||
+        !weowe.sales_manager_comments
+      ) {
+        comments = false;
       } else {
-        db.collection("weowes")
-          .doc(weowe.id)
-          .update({
-            "sales.completion_timestamp": Date.now(),
-            "sales.manager": this.user.display_name,
-            "sales.photo": firebase.auth().currentUser.photoURL,
-            "states.sales_state": false,
-            "status.sales_status": "Complete",
-            "states.parts_state": true,
-            "status.parts_status": "Pending...",
-            "data.spiff": weowe.data.spiff,
-            sales_manager_comments: weowe.sales_manager_comments
-          });
+        comments = true;
       }
+      console.log(comments);
+      if (comments == false) {
+        // * Needs to go to both parts and genius
+        if (no_coordinate.length > 0 && coordinate.length > 0) {
+          db.collection("weowes")
+            .doc(weowe.id)
+            .update({
+              no_coordinate: no_coordinate,
+              coordinate: coordinate,
+              "sales.completion_timestamp": Date.now(),
+              "sales.manager": this.user.display_name,
+              "sales.photo": firebase.auth().currentUser.photoURL,
+              "states.sales_state": false,
+              "status.sales_status": "Complete",
+              "states.parts_state": true,
+              "status.parts_status": "Pending...",
+              "states.genius_state": true,
+              "status.genius_status": "Pending",
+              parts_in_stock: null,
+              appointment_date: "",
+              completion_date: "",
+              invoice_number: "",
+              "data.spiff": weowe.data.spiff
+            });
+        }
+        // * Needs to go to just genius
+        else if (coordinate.length > 0) {
+          db.collection("weowes")
+            .doc(weowe.id)
+            .update({
+              no_coordinate: no_coordinate,
+              coordinate: coordinate,
+              "sales.completion_timestamp": Date.now(),
+              "sales.manager": this.user.display_name,
+              "sales.photo": firebase.auth().currentUser.photoURL,
+              "states.sales_state": false,
+              "status.sales_status": "Complete",
+              "states.genius_state": true,
+              "status.genius_status": "Pending",
+              parts_in_stock: null,
+              appointment_date: "",
+              completion_date: "",
+              invoice_number: "",
+              "data.spiff": weowe.data.spiff
+            });
+        }
+        // * Needs to go to just parts
+        else if (no_coordinate.length > 0) {
+          db.collection("weowes")
+            .doc(weowe.id)
+            .update({
+              no_coordinate: no_coordinate,
+              coordinate: coordinate,
+              "sales.completion_timestamp": Date.now(),
+              "sales.manager": this.user.display_name,
+              "sales.photo": firebase.auth().currentUser.photoURL,
+              "states.sales_state": false,
+              "status.sales_status": "Complete",
+              "states.parts_state": true,
+              "status.parts_status": "Pending...",
+              "data.spiff": weowe.data.spiff
+            });
+        } else {
+          db.collection("weowes")
+            .doc(weowe.id)
+            .update({
+              "sales.completion_timestamp": Date.now(),
+              "sales.manager": this.user.display_name,
+              "sales.photo": firebase.auth().currentUser.photoURL,
+              "states.sales_state": false,
+              "status.sales_status": "Complete",
+              "states.parts_state": true,
+              "status.parts_status": "Pending...",
+              "data.spiff": weowe.data.spiff
+            });
+        }
+      } else {
+        // * Needs to go to both parts and genius
+        if (no_coordinate.length > 0 && coordinate.length > 0) {
+          db.collection("weowes")
+            .doc(weowe.id)
+            .update({
+              no_coordinate: no_coordinate,
+              coordinate: coordinate,
+              "sales.completion_timestamp": Date.now(),
+              "sales.manager": this.user.display_name,
+              "sales.photo": firebase.auth().currentUser.photoURL,
+              "states.sales_state": false,
+              "status.sales_status": "Complete",
+              "states.parts_state": true,
+              "status.parts_status": "Pending...",
+              "states.genius_state": true,
+              "status.genius_status": "Pending",
+              parts_in_stock: null,
+              appointment_date: "",
+              completion_date: "",
+              invoice_number: "",
+              "data.spiff": weowe.data.spiff,
+              sales_manager_comments: weowe.sales_manager_comments
+            });
+        }
+        // * Needs to go to just genius
+        else if (coordinate.length > 0) {
+          db.collection("weowes")
+            .doc(weowe.id)
+            .update({
+              no_coordinate: no_coordinate,
+              coordinate: coordinate,
+              "sales.completion_timestamp": Date.now(),
+              "sales.manager": this.user.display_name,
+              "sales.photo": firebase.auth().currentUser.photoURL,
+              "states.sales_state": false,
+              "status.sales_status": "Complete",
+              "states.genius_state": true,
+              "status.genius_status": "Pending",
+              parts_in_stock: null,
+              appointment_date: "",
+              completion_date: "",
+              invoice_number: "",
+              "data.spiff": weowe.data.spiff,
+              sales_manager_comments: weowe.sales_manager_comments
+            });
+        }
+        // * Needs to go to just parts
+        else if (no_coordinate.length > 0) {
+          db.collection("weowes")
+            .doc(weowe.id)
+            .update({
+              no_coordinate: no_coordinate,
+              coordinate: coordinate,
+              "sales.completion_timestamp": Date.now(),
+              "sales.manager": this.user.display_name,
+              "sales.photo": firebase.auth().currentUser.photoURL,
+              "states.sales_state": false,
+              "status.sales_status": "Complete",
+              "states.parts_state": true,
+              "status.parts_status": "Pending...",
+              "data.spiff": weowe.data.spiff,
+              sales_manager_comments: weowe.sales_manager_comments
+            });
+        } else {
+          db.collection("weowes")
+            .doc(weowe.id)
+            .update({
+              "sales.completion_timestamp": Date.now(),
+              "sales.manager": this.user.display_name,
+              "sales.photo": firebase.auth().currentUser.photoURL,
+              "states.sales_state": false,
+              "status.sales_status": "Complete",
+              "states.parts_state": true,
+              "status.parts_status": "Pending...",
+              "data.spiff": weowe.data.spiff,
+              sales_manager_comments: weowe.sales_manager_comments
+            });
+        }
+      }
+
       console.log(coordinate);
       this.$bvModal.hide(weowe.id);
     },
