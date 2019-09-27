@@ -31,7 +31,10 @@ const router = new Router({
     {
       path: "/makeready/plates",
       name: "Plates",
-      component: Plates
+      component: Plates,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/makeready/completedeallog",
@@ -68,12 +71,18 @@ const router = new Router({
     {
       path: "/makeready/tracking/weowes",
       name: "WeOweTracking",
-      component: WeOweTracking
+      component: WeOweTracking,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/makeready/tracking/makeready",
       name: "MakeReadyTracking",
-      component: MakeReadyTracking
+      component: MakeReadyTracking,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/makeready/:id",
@@ -99,49 +108,60 @@ router.beforeEach((to, from, next) => {
         .doc(cred.email)
         .get()
         .then(doc => {
-          // check auth state of user
-          if (doc.data().access_level == "Admin") {
-            next();
-          } else if (
-            (doc.data().access_level == "SalesManager" ||
-              doc.data().access_level == "Sales" ||
-              doc.data().access_level == "Genius") &&
-            to.name == "Request" &&
-            to.name !== "Admin" &&
-            to.name !== "Title" &&
-            to.name !== "CompleteDealLog"
+          let access = doc.data().access_level;
+          // * If there is a user logged in you have access to: Plates, Make Ready Tracking, We Owe Tracking
+          if (
+            cred &&
+            (to.name == "Plates" ||
+              to.name == "MakeReadyTracking" ||
+              to.name == "WeOweTracking")
           ) {
             next();
-          } else if (
-            doc.data().access_level !== "Undefined" &&
-            to.name !== "Request" &&
-            to.name !== "Admin" &&
-            to.name !== "Title" &&
-            to.name !== "CompleteDealLog"
-          ) {
-            next();
-          } else if (doc.data().access_level == "Title" && to.name == "Title") {
-            next();
-          } else if (
-            doc.data().access_level == "SalesManager" &&
-            to.name == "CompleteDealLog"
-          ) {
-            next();
-          } else {
-            if (doc.data().access_level == "Title") {
-              next("/makeready/titling");
-            } else if (doc.data().access_level == "rdr") {
-              next("/makeready/completedeallog");
-            } else {
-              next("/makeready/user/dashboard");
-            }
           }
-          // User is signed in. Proceed to route
+          // * If the users access level is equal to "Sales"
+          else if (
+            access == "Sales" &&
+            (to.name == "Request" ||
+              to.name == "Dashboard" ||
+              to.name == "Success")
+          ) {
+            next();
+          }
+          // * If the users access level is equal to "SalesManager"
+          else if (
+            access == "SalesManager" &&
+            (to.name == "Request" ||
+              to.name == "Dashboard" ||
+              to.name == "CompleteDealLog" ||
+              to.name == "Success")
+          ) {
+            next();
+          }
+          // * If the users access level is equal to "Parts"
+          else if (access == "Parts" && to.name == "Dashboard") {
+            next();
+          }
+          // * If the users access level is equal to "Finance"
+          else if (access == "Finance" && to.name == "Dashboard") {
+            next();
+          }
+          // * If the users access level is equal to "Detail"
+          else if (access == "Detail" && to.name == "Dashboard") {
+            next();
+          }
+          // * If the users access level is equal to "Title"
+          else if (access == "Title" && to.name == "Title") {
+            next();
+          }
         });
-    } else {
+    }
+    // * If authorization is required and the user is not logged in yet
+    else {
       next("/makeready/auth/login");
     }
-  } else {
+  }
+  // * If no authorization is required
+  else {
     next();
   }
 });
