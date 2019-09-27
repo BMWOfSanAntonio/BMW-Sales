@@ -12,6 +12,9 @@ import Dashboard from "@/components/dashboard/Dashboard";
 import WeOweTracking from "@/components/tracking/WeOweTracking";
 import Login from "@/components/authen/Login";
 import MakeReadyTracking from "@/components/tracking/MakeReadyTracking";
+import CompleteDealLog from "@/components/tracking/CompleteDealLog";
+import Title from "@/components/tracking/Title";
+import Plates from "@/components/dashboard/Plates";
 
 Vue.use(Router);
 
@@ -21,6 +24,27 @@ const router = new Router({
       path: "/",
       name: "Admin",
       component: Admin,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/makeready/plates",
+      name: "Plates",
+      component: Plates
+    },
+    {
+      path: "/makeready/completedeallog",
+      name: "CompleteDealLog",
+      component: CompleteDealLog,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/makeready/titling",
+      name: "Title",
+      component: Title,
       meta: {
         requiresAuth: true
       }
@@ -83,17 +107,34 @@ router.beforeEach((to, from, next) => {
               doc.data().access_level == "Sales" ||
               doc.data().access_level == "Genius") &&
             to.name == "Request" &&
-            to.name !== "Admin"
+            to.name !== "Admin" &&
+            to.name !== "Title" &&
+            to.name !== "CompleteDealLog"
           ) {
             next();
           } else if (
             doc.data().access_level !== "Undefined" &&
             to.name !== "Request" &&
-            to.name !== "Admin"
+            to.name !== "Admin" &&
+            to.name !== "Title" &&
+            to.name !== "CompleteDealLog"
+          ) {
+            next();
+          } else if (doc.data().access_level == "Title" && to.name == "Title") {
+            next();
+          } else if (
+            doc.data().access_level == "SalesManager" &&
+            to.name == "CompleteDealLog"
           ) {
             next();
           } else {
-            next("/makeready/user/dashboard");
+            if (doc.data().access_level == "Title") {
+              next("/makeready/titling");
+            } else if (doc.data().access_level == "rdr") {
+              next("/makeready/completedeallog");
+            } else {
+              next("/makeready/user/dashboard");
+            }
           }
           // User is signed in. Proceed to route
         });

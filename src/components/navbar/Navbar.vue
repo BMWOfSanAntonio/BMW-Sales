@@ -16,9 +16,22 @@
               <i class="material-icons align-middle">description</i>
               <h6 class="inline align-middle">Request</h6>
             </b-nav-item>
-            <b-nav-item href="#/makeready/user/dashboard">
+            <!-- if access is equal to titling -->
+            <b-nav-item v-if="user.access_level == 'Title'" href="#/makeready/titling">
               <i class="material-icons align-middle">dashboard</i>
               <h6 class="inline align-middle">Dashboard</h6>
+            </b-nav-item>
+            <b-nav-item v-else href="#/makeready/user/dashboard">
+              <i class="material-icons align-middle">dashboard</i>
+              <h6 class="inline align-middle">Dashboard</h6>
+            </b-nav-item>
+            <!-- if access is equal to rdr -->
+            <b-nav-item
+              v-if="user.access_level == 'SalesManager'"
+              href="#/makeready/completedeallog"
+            >
+              <i class="material-icons align-middle">done</i>
+              <h6 class="inline align-middle">RDR</h6>
             </b-nav-item>
           </b-navbar-nav>
 
@@ -59,11 +72,8 @@
   </div>
 </template>
 
-    </b-navbar>
-  </div>
-</template>
-
 <script>
+import { db } from "../../main";
 import firebase from "firebase";
 export default {
   name: "Navbar",
@@ -98,7 +108,8 @@ export default {
           path: "#/makeready/tracking/makeready",
           icon: "done"
         }
-      ]
+      ],
+      userr: firebase.auth().currentUser
     };
   },
   methods: {

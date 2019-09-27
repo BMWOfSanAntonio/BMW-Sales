@@ -158,7 +158,7 @@ export default {
           db.collection("makeready")
             .doc(req.id)
             .update({
-              "sales.completion_timestamp": Date.now(),
+              "sales.completion_makeready_timestamp": Date.now(),
               "sales.sales_manager": this.user.display_name,
               "sales.sales_manager_photo": firebase.auth().currentUser.photoURL,
               "status.sales_status": "Make ready approved",
@@ -189,7 +189,7 @@ export default {
           db.collection("makeready")
             .doc(req.id)
             .update({
-              "sales.completion_timestamp": Date.now(),
+              "sales.completion_makeready_timestamp": Date.now(),
               "sales.sales_manager": this.user.display_name,
               "sales.sales_manager_photo": firebase.auth().currentUser.photoURL,
               "status.sales_status": "Make ready approved",

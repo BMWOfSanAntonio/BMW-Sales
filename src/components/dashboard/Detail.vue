@@ -239,7 +239,7 @@ export default {
       detailView: db
         .collection("makeready")
         .where("states.detail_state", "==", true)
-        .orderBy("sales.completion_makeready_timestamp")
+        .orderBy("initial_timestamp")
     };
   }
 };

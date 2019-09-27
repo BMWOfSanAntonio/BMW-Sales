@@ -2,6 +2,6 @@
   "hosting": {
     "public": "dist",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "site": "makeready-1021a"
+    "site": "bmwtesting"
   }
 }

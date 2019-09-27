@@ -73,6 +73,7 @@
         v-if="user.access_level == 'Finance' || user.access_level == 'Admin'"
         :user="user"
       />
+      <!-- // * Genius View -->
       <Genius class="space" v-if="user.access_level == 'Genius' || user.access_level == 'Admin'" />
       <!-- // ! user/department views: End -->
     </table>

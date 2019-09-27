@@ -423,6 +423,8 @@ export default {
       db.collection("makeready")
         .add({
           initial_timestamp: Date.now(),
+          rdr: null,
+          plates: null,
           data: {
             // * Form input values
             customer_name: this.customer_name,
