@@ -44,7 +44,8 @@ export default {
         .doc(deal.id)
         .update({
           plates: "Complete",
-          plates_timestamp: Date.now()
+          plates_timestamp: Date.now(),
+          plates_associate: firebase.auth().currentUser.displayName
         });
     }
   },

@@ -47,7 +47,8 @@ export default {
         .doc(plate.id)
         .update({
           plates: "Finished",
-          plates_to_customer: Date.now()
+          plates_to_customer: Date.now(),
+          plates_to_customer_associate: firebase.auth().currentUser.displayName
         });
     }
   },

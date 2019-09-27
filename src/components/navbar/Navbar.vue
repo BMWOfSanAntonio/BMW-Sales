@@ -107,6 +107,11 @@ export default {
           name: "Make Ready",
           path: "#/makeready/tracking/makeready",
           icon: "done"
+        },
+        {
+          name: "License Plates",
+          path: "#/makeready/plates",
+          icon: "dvr"
         }
       ],
       userr: firebase.auth().currentUser

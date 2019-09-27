@@ -44,7 +44,8 @@ export default {
         .doc(deal.id)
         .update({
           rdr: "Complete",
-          rdr_timestamp: Date.now()
+          rdr_timestamp: Date.now(),
+          rdr_associate: firebase.auth().currentUser.displayName
         });
     }
   },
