@@ -23,7 +23,6 @@ const router = new Router({
     {
       path: "/",
       name: "Admin",
-      component: Admin,
       meta: {
         requiresAuth: true
       }
@@ -129,13 +128,15 @@ router.beforeEach((to, from, next) => {
           }
           // * If the users access level is equal to "SalesManager"
           else if (
-            access == "SalesManager" &&
+            (access == "SalesManager" || access == "Genius") &&
             (to.name == "Request" ||
               to.name == "Dashboard" ||
               to.name == "CompleteDealLog" ||
               to.name == "Success")
           ) {
             next();
+          } else if (to.path == "/") {
+            next("/makeready/user/dashboard");
           }
           // * If the users access level is equal to "Parts"
           else if (access == "Parts" && to.name == "Dashboard") {
@@ -152,6 +153,8 @@ router.beforeEach((to, from, next) => {
           // * If the users access level is equal to "Title"
           else if (access == "Title" && to.name == "Title") {
             next();
+          } else {
+            next("/makeready/user/dashboard");
           }
         });
     }

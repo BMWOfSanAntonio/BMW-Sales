@@ -67,6 +67,11 @@
     user.access_level == 'Detail' || user.access_level == 'Admin'"
         :user="user"
       />
+      <Preowned
+        :user="user"
+        v-if="
+    user.access_level == 'Detail' || user.access_level == 'Admin'"
+      />
       <!-- // * Finance View -->
       <Finance
         class="space"
@@ -96,6 +101,7 @@ import SalesManagerWeOwe from "./SalesManagerWeOwe";
 import PartsWeOwe from "./PartsWeOwe";
 import DetailNanoCare from "./DetailNanoCare";
 import Genius from "./Genius";
+import Preowned from "./Preowned";
 
 export default {
   name: "Dashboard",
@@ -109,7 +115,8 @@ export default {
     SalesManagerWeOwe,
     PartsWeOwe,
     DetailNanoCare,
-    Genius
+    Genius,
+    Preowned
   },
   props: ["user"],
   data() {
@@ -118,7 +125,6 @@ export default {
       salesManagerView: [],
       partsView: [],
       detailView: [],
-      financeView: [],
       weowePackages: [],
       weoweSalesManager: [],
       partsPackages: [],

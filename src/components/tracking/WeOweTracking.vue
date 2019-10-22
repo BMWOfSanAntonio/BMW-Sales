@@ -8,6 +8,7 @@
           <th scope="col">Date</th>
           <th scope="col">Sales Associate</th>
           <th scope="col">Customer Name</th>
+          <th scope="col">Invoice Number</th>
           <th scope="col">Stock Number</th>
           <th scope="col">Info</th>
         </tr>
@@ -18,11 +19,17 @@
           <td>{{ dateFormat(weowe) }}</td>
           <td>{{ weowe.userinfo.associate }}</td>
           <td>{{ weowe.data.customer_name }}</td>
+          <td>{{ weowe.invoice_number }}</td>
           <td>{{ weowe.data.stock_number }}</td>
           <td>
             <i v-b-modal="weowe.id" class="material-icons">info</i>
             <!-- // * Modal: Start -->
-            <b-modal centered size="lg" :id="weowe.id" title="More Information: ">
+            <b-modal
+              centered
+              size="lg"
+              :id="weowe.id"
+              title="More Information: "
+            >
               <!-- // * ~~~ Deal infromation sections ~~~ -->
               <h5 class="ml-4">Deal Information:</h5>
               <ul>
@@ -49,10 +56,9 @@
               </ul>
               <h5 class="ml-4">Items:</h5>
               <ul>
-                <li
-                  v-for="(item, i) in weowe.data.accessories"
-                  :key="i"
-                >{{ item.accessory }} - {{ item.total_install_price }}</li>
+                <li v-for="(item, i) in weowe.data.accessories" :key="i">
+                  {{ item.accessory }} - {{ item.total_install_price }}
+                </li>
               </ul>
               <h5 class="ml-4">Status:</h5>
               <ul>
@@ -93,7 +99,10 @@ export default {
   },
   firestore() {
     return {
-      weowes: db.collection("weowes").limit(100)
+      weowes: db
+        .collection("weowes")
+        .orderBy("initial_timestamp", "desc")
+        .limit(100)
     };
   }
 };

@@ -17,13 +17,19 @@
         <!-- // * type of vehicle -->
         <td>
           <h5 v-if="req.data.type_of_vehicle == 'New'">
-            <b-badge pill variant="danger">{{ req.data.type_of_vehicle }}</b-badge>
+            <b-badge pill variant="danger">{{
+              req.data.type_of_vehicle
+            }}</b-badge>
           </h5>
           <h5 v-if="req.data.type_of_vehicle == 'Loaner'">
-            <b-badge pill variant="success">{{ req.data.type_of_vehicle }}</b-badge>
+            <b-badge pill variant="success">{{
+              req.data.type_of_vehicle
+            }}</b-badge>
           </h5>
           <h5 v-if="req.data.type_of_vehicle == 'Pre-Owned'">
-            <b-badge pill variant="warning">{{ req.data.type_of_vehicle }}</b-badge>
+            <b-badge pill variant="warning">{{
+              req.data.type_of_vehicle
+            }}</b-badge>
           </h5>
         </td>
         <!-- // * type of request -->
@@ -33,14 +39,23 @@
         <!-- // * status -->
         <template>
           <td
-            v-if="req.status.parts_status !== 'Complete' || req.status.detail_status !== 'Complete' || req.status.finance_status !== 'Complete'"
+            v-if="
+              req.status.parts_status !== 'Complete' ||
+                req.status.detail_status !== 'Complete' ||
+                req.status.finance_status !== 'Complete'
+            "
           >
             <h5>
               <b-badge pill variant="warning">In Process...</b-badge>
             </h5>
           </td>
           <td
-            v-else-if="req.parts.parts_on_order == 'Yes' && req.status.parts_status =='Complete' && req.status.detail_status == 'Complete' && req.status.finance_status == 'Complete'"
+            v-else-if="
+              req.parts.parts_on_order == 'Yes' &&
+                req.status.parts_status == 'Complete' &&
+                req.status.detail_status == 'Complete' &&
+                req.status.finance_status == 'Complete'
+            "
           >
             <h5>
               <b-badge pill variant="danger">Complete w/ Parts Ordered</b-badge>
@@ -115,21 +130,27 @@
                 <!-- // * Sales Status: Complete -->
                 <template v-if="req.sales">
                   <h5 class="inline">
-                    <b-badge pill variant="success">{{ req.status.sales_status }}</b-badge>
+                    <b-badge pill variant="success">{{
+                      req.status.sales_status
+                    }}</b-badge>
                   </h5>
                 </template>
 
                 <!-- // * Sales Status: Pending -->
                 <template v-else-if="req.detail">
                   <h5 class="inline">
-                    <b-badge pill variant="warning">{{ req.status.sales_status }}</b-badge>
+                    <b-badge pill variant="warning">{{
+                      req.status.sales_status
+                    }}</b-badge>
                   </h5>
                 </template>
 
                 <!-- // * Finance Status: Pending -->
                 <template v-if="req.status.finance_status == null">
                   <h5 class="inline">
-                    <b-badge pill variant="warning">Finance Pending Approval</b-badge>
+                    <b-badge pill variant="warning"
+                      >Finance Pending Approval</b-badge
+                    >
                   </h5>
                 </template>
 
@@ -147,28 +168,37 @@
                 <!-- // * Parts Status: Pending -->
                 <template v-if="req.status.parts_status == 'Pending...'">
                   <h5 class="inline">
-                    <b-badge pill variant="warning">{{ req.status.parts_status }}</b-badge>
+                    <b-badge pill variant="warning">{{
+                      req.status.parts_status
+                    }}</b-badge>
                   </h5>
                 </template>
                 <!-- // * Parts Status: Claimed -->
                 <template v-else-if="req.status.parts_status == 'Claimed'">
                   <h5 class="inline">
-                    <b-badge
-                      pill
-                      variant="primary"
-                    >{{ req.status.parts_status }} by {{ req.parts.parts_associate }}</b-badge>
+                    <b-badge pill variant="primary"
+                      >{{ req.status.parts_status }} by
+                      {{ req.parts.parts_associate }}</b-badge
+                    >
                   </h5>
                 </template>
                 <!-- // * Parts Status: Complete -->
                 <template v-else-if="req.status.parts_status == 'Complete'">
                   <h5 class="inline">
-                    <b-badge pill variant="success">Complete by {{ req.parts.parts_associate }}</b-badge>
+                    <b-badge pill variant="success"
+                      >Complete
+                      <span v-if="req.parts.parts_associate"
+                        >by {{ req.parts.parts_associate }}</span
+                      ></b-badge
+                    >
                   </h5>
                 </template>
                 <!-- // * Parts Status: Parts need to be ordered -->
                 <template v-if="req.parts.parts_on_order == 'Yes'">
                   <h5>
-                    <b-badge pill variant="danger">Parts need to be ordered!</b-badge>
+                    <b-badge pill variant="danger"
+                      >Parts need to be ordered!</b-badge
+                    >
                   </h5>
                 </template>
               </li>
@@ -179,27 +209,29 @@
                 <!-- // * Finance Status: Pending -->
                 <template v-if="req.status.finance_status == 'Pending...'">
                   <h5 class="inline">
-                    <b-badge pill variant="warning">{{ req.status.finance_status }}</b-badge>
+                    <b-badge pill variant="warning">{{
+                      req.status.finance_status
+                    }}</b-badge>
                   </h5>
                 </template>
 
                 <!-- // * Finance Status: Claimed -->
                 <template v-if="req.status.finance_status == 'Claimed'">
                   <h5 class="inline">
-                    <b-badge
-                      pill
-                      variant="primary"
-                    >{{ req.status.finance_status }} by {{ req.finance.finance_associate }}</b-badge>
+                    <b-badge pill variant="primary"
+                      >{{ req.status.finance_status }} by
+                      {{ req.finance.finance_associate }}</b-badge
+                    >
                   </h5>
                 </template>
 
                 <!-- // * Finance Status: Complete -->
                 <template v-if="req.status.finance_status == 'Complete'">
                   <h5 class="inline">
-                    <b-badge
-                      pill
-                      variant="success"
-                    >{{ req.status.finance_status }} by {{ req.finance.finance_associate }}</b-badge>
+                    <b-badge pill variant="success"
+                      >{{ req.status.finance_status }} by
+                      {{ req.finance.finance_associate }}</b-badge
+                    >
                   </h5>
                 </template>
                 <!-- // * Nano Care: Yes -->
@@ -216,13 +248,17 @@
                 <!-- // * Detail Status: Pending -->
                 <template v-if="req.status.detail_status == 'Pending...'">
                   <h5 class="inline">
-                    <b-badge pill variant="warning">{{ req.status.detail_status }}</b-badge>
+                    <b-badge pill variant="warning">{{
+                      req.status.detail_status
+                    }}</b-badge>
                   </h5>
                 </template>
                 <!-- // * Detail Status: Complete -->
                 <template v-if="req.status.detail_status == 'Complete'">
                   <h5 class="inline">
-                    <b-badge pill variant="success">{{ req.status.detail_status }}</b-badge>
+                    <b-badge pill variant="success">{{
+                      req.status.detail_status
+                    }}</b-badge>
                   </h5>
                 </template>
               </li>
@@ -233,7 +269,8 @@
               @click="clearFromView(req)"
               class="ml-3"
               variant="info"
-            >Clear From View</b-button>
+              >Clear From View</b-button
+            >
           </b-modal>
           <!-- // * Modal: End -->
         </td>

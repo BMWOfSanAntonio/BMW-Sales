@@ -137,7 +137,7 @@ export default {
   },
   methods: {
     startMakeReady(req) {
-      if (req.data.type_of_vehicle == "Pre-Owned") {
+      if (req.data.type_of_vehicle == "Pre-Owned" || (req.data.type_of_vehicle == 'Loaner' && req.data.ccp === 'No')) {
         // * If finance has been initiated , starts off at null, then the request will be removed from the sales managers view
         if (req.status.finance_status !== null) {
           db.collection("makeready")

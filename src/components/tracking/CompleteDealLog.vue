@@ -4,7 +4,6 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th scope="col">#</th>
           <th scope="col">Sales Associate</th>
           <th scope="col">Customer Name</th>
           <th scope="col">Stock Number</th>
@@ -13,8 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(deal, i) in deals" :key="i">
-          <th scope="row">{{ i + 1 }}</th>
+        <tr v-for="deal in deals" :key="deal.data.stock_number">
           <td>{{ deal.userinfo.associate }}</td>
           <td>{{ deal.data.customer_name }}</td>
           <td>{{ deal.data.stock_number }}</td>

@@ -1,20 +1,28 @@
 <template>
-  <div class="hello">
+  <div class="reports">
     <table class="table">
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Stock Number</th>
-          <th scope="col">Sales Associate</th>
-          <th scope="col">Dollar Amount</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Handle</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(s, i) in spiff" :key="i">
-          <td>{{ i + 1 }}</td>
-          <td>{{ s.data.stock_number }}</td>
-          <td>{{ s.userinfo.associate }}</td>
-          <td>{{ amount(s) }}</td>
+        <tr v-for="(detail, i) in details" :key="i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ dateFormat(detail.initial_timestamp) }}</td>
+          <td>{{ detail.userinfo.associate }}</td>
+          <td>{{ detail.data.stock_number }}</td>
+          <td>{{ detail.data.type_of_vehicle }}</td>
+        </tr>
+        <tr v-for="(detail, i) in old" :key="i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ oldDate(detail.initial_timestamp) }}</td>
+          <td>{{ detail.associate }}</td>
+          <td>{{ detail.stock_number }}</td>
+          <td>{{ detail.vehicle_type }}</td>
         </tr>
       </tbody>
     </table>
@@ -22,47 +30,35 @@
 </template>
 
 <script>
-import firebase from "firebase";
 import { db } from "../main";
+import firebase from "firebase";
+
 export default {
-  name: "HelloWorld",
+  name: "Admin",
   data() {
     return {
-      spiff: []
+      details: [],
+      old: []
     };
   },
   methods: {
-    amount(s) {
-      let dollar = 0;
-      s.data.accessories.forEach(item => {
-        dollar = dollar + Number(item.adviser_spiff.replace(/[^0-9.-]+/g, ""));
-      });
-      return dollar;
+    dateFormat(t) {
+      return new Date(t).toDateString();
+    },
+    oldDate(date) {
+      return new Date(date.seconds * 1000).toDateString();
     }
   },
   firestore() {
     return {
-      spiff: db.collection("weowes").where("data.spiff", "==", "Yes")
+      details: db
+        .collection("makeready")
+        .where("status.detail_status", "==", "Complete"),
+      old: db.collection("makeReady").where("detail_status", "==", "Complete")
     };
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1,
-h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 </style>

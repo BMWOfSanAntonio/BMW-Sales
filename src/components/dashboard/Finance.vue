@@ -3,7 +3,7 @@
     <TableHeader />
     <tbody>
       <!-- // * Says that the request has a finance state of true and either finance or admin assess -->
-      <tr v-for="(req, i) in financeView" :key="i">
+      <tr v-for="(req, i) in financeView" :key="req.id">
         <!-- // * index of the document -->
         <td>{{ i + 1 }}</td>
         <!-- // * elapsed timer -->
@@ -35,7 +35,14 @@
         <td>
           <i v-b-modal="req.id" class="material-icons">info</i>
           <!-- // * Modal: Start -->
-          <b-modal hide-footer centered size="lg" :id="req.id" title="More Information: ">
+          <b-modal
+            :ref="req.id"
+            hide-footer
+            centered
+            size="lg"
+            :id="req.id"
+            title="More Information: "
+          >
             <!-- // * ~~~ Deal infromation sections ~~~ -->
             <h5 class="ml-4">Finance Information:</h5>
             <ul>
@@ -173,6 +180,9 @@ export default {
     };
   },
   methods: {
+    open(req) {
+      $("#" + req.id).modal("show");
+    },
     claim(req) {
       db.collection("makeready")
         .doc(req.id)
@@ -235,6 +245,7 @@ export default {
             "finance.nano_care": req.finance.nano_care
           });
       }
+      this.$bvModal.hide(req.id);
     },
     kill(req) {
       db.collection("makeready")

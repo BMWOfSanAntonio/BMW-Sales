@@ -6,7 +6,11 @@
       <tr
         v-for="(req, i) in partsView"
         :key="i"
-        v-if="(req.data.type_of_vehicle == 'New' || (req.data.type_of_vehicle == 'Loaner' && req.data.ccp == 'Yes')) && req.states.parts_state == true"
+        v-if="
+          (req.data.type_of_vehicle == 'New' ||
+            (req.data.type_of_vehicle == 'Loaner' && req.data.ccp == 'Yes')) &&
+            req.states.parts_state == true
+        "
       >
         <!-- // * index of the document -->
         <td>{{ i + 1 }}</td>
@@ -28,14 +32,24 @@
         <!-- // * Status -->
         <template>
           <td v-if="req.status.parts_status !== 'Claimed'">Pending...</td>
-          <td v-if="req.status.parts_status == 'Claimed'">Claimed by {{ user.display_name }}</td>
-          <td v-if="req.status.parts_status == 'Complete'">Claimed by {{ user.display_name }}</td>
+          <td v-if="req.status.parts_status == 'Claimed'">
+            Claimed by {{ user.display_name }}
+          </td>
+          <td v-if="req.status.parts_status == 'Complete'">
+            Claimed by {{ user.display_name }}
+          </td>
         </template>
 
         <td>
           <i v-b-modal="req.id" class="material-icons">info</i>
           <!-- // * Modal: Start -->
-          <b-modal hide-footer centered size="lg" :id="req.id" title="More Information: ">
+          <b-modal
+            hide-footer
+            centered
+            size="lg"
+            :id="req.id"
+            title="More Information: "
+          >
             <!-- // * ~~~ Deal infromation sections ~~~ -->
             <h5 class="ml-4">Make Ready Information:</h5>
             <ul>
@@ -107,12 +121,14 @@
                     v-model="req.parts.afterhours"
                     name="some-radios"
                     value="Yes"
-                  >Yes, it was.</b-form-radio>
+                    >Yes, it was.</b-form-radio
+                  >
                   <b-form-radio
                     v-model="req.parts.afterhours"
                     name="some-radios"
                     value="No"
-                  >No, it was not.</b-form-radio>
+                    >No, it was not.</b-form-radio
+                  >
                 </b-form-group>
 
                 <!-- // * Parts on Order: this should be for both the customer care package and the carpet mats -->
@@ -126,13 +142,15 @@
                     name="some-other-radios"
                     value="Yes"
                     required
-                  >Yes, parts needed to be ordered.</b-form-radio>
+                    >Yes, parts needed to be ordered.</b-form-radio
+                  >
                   <b-form-radio
                     v-model="req.parts.parts_on_order"
                     name="some-other-radios"
                     value="No"
                     required
-                  >No, parts did not need to be ordered.</b-form-radio>
+                    >No, parts did not need to be ordered.</b-form-radio
+                  >
                 </b-form-group>
 
                 <!-- // * Invoice Number: this should be for the customer care package only -->
@@ -156,12 +174,16 @@
                 <template>
                   <!-- // * Unclaim: should only show if req.status.parts_status is equal to 'Claimed' -->
                   <template v-if="req.status.parts_status == 'Claimed'">
-                    <b-button @click="unclaim(req)" variant="danger">Unclaim</b-button>
+                    <b-button @click="unclaim(req)" variant="danger"
+                      >Unclaim</b-button
+                    >
                   </template>
 
                   <!-- // * Complete: should appear disabled until all fields have a value -->
                   <template v-if="req.status.parts_status == 'Claimed'">
-                    <b-button type="submit" variant="success">Complete Request</b-button>
+                    <b-button type="submit" variant="success"
+                      >Complete Request</b-button
+                    >
                   </template>
                 </template>
               </b-form>
@@ -169,7 +191,9 @@
             <!-- // * ~~~ Buttons ~~~ -->
             <!-- // * Claim: should show only when req.status.parts_status does not equal "Claimed" -->
             <template v-if="req.status.parts_status !== 'Claimed'">
-              <b-button class="ml-4" @click="claim(req)" variant="success">Claim</b-button>
+              <b-button class="ml-4" @click="claim(req)" variant="success"
+                >Claim</b-button
+              >
             </template>
           </b-modal>
           <!-- // * Modal: End -->
@@ -261,7 +285,7 @@ export default {
     },
     dateFormat(req) {
       return Math.floor(
-        (this.currentTime - req.sales.completion_timestamp) / 60000
+        (this.currentTime - req.sales.completion_makeready_timestamp) / 60000
       );
     }
   },
@@ -274,6 +298,7 @@ export default {
       partsView: db
         .collection("makeready")
         .where("states.parts_state", "==", true)
+        .orderBy("initial_timestamp")
     };
   }
 };
